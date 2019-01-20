@@ -1,2 +1,6 @@
 # IntelliJ
 .idea/
+
+# Tests and their coverages
+cover.out
+coverage.html
