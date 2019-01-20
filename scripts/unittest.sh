@@ -18,7 +18,8 @@ function unittest() {
     done
 
     # unit test the main package
-    go test . -race -v -coverprofile cover.out || EXIT_CODE=1
+    # No main files to test in main package; ignoring
+    # go test . -race -v -coverprofile cover.out || EXIT_CODE=1
 
     # exit poorly if any test failed
     exit ${EXIT_CODE}
@@ -35,8 +36,9 @@ function generate_coverage() {
         ${REPORTER} format-coverage -t gocov -o tmp/${report_file} ${cover_file}
     done
 
-    echo "Generating cc.main.json from ./cover.out"
-    ${REPORTER} format-coverage -t gocov -o tmp/cc.main.json ./cover.out
+    # No main files to test in main package; ignoring
+    # echo "Generating cc.main.json from ./cover.out"
+    # ${REPORTER} format-coverage -t gocov -o tmp/cc.main.json ./cover.out
 }
 
 function sum_coverage() {
