@@ -35,5 +35,34 @@ var _ = Describe("Comparers", func() {
 			result := Int64(13).Compare(Int64(12))
 			Expect(result).To(Equal(GREATER))
 		})
+
+		It("should not be comparable to another Comparer of different type", func() {
+			result := Int64(13).Compare(String("13"))
+			Expect(result).To(Equal(INCOMPARABLE))
+		})
+	})
+
+	Describe("String", func(){
+		It("should equal another String of same value", func() {
+			comparable, same := String("hello").Equal(String("hello"))
+			Expect(comparable).To(BeTrue())
+			Expect(same).To(BeTrue())
+		})
+
+		It("should not another String of different value", func() {
+			comparable, same := String("hello").Equal(String("hello "))
+			Expect(comparable).To(BeTrue())
+			Expect(same).To(BeFalse())
+		})
+
+		It("should be less than another String of greater value", func() {
+			result := String("hello").Compare(String("world"))
+			Expect(result).To(Equal(LESSER))
+		})
+
+		It("should be greater than another String of lesser value", func() {
+			result := String("hello").Compare(String("Hello"))
+			Expect(result).To(Equal(GREATER))
+		})
 	})
 })
