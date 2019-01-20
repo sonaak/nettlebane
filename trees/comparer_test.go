@@ -20,10 +20,16 @@ var _ = Describe("Comparers", func() {
 			Expect(same).To(BeTrue())
 		})
 
+
 		It("should not equal another Int64 of different value", func() {
 			comparable, same := Int64(12).Equal(Int64(10))
 			Expect(comparable).To(BeTrue())
 			Expect(same).To(BeFalse())
+		})
+
+		It("should not be comparable to another Equaler of different type", func() {
+			comparable, _ := Int64(12).Equal(String("12"))
+			Expect(comparable).To(BeFalse())
 		})
 
 		It("should be less another Int64 of greater value", func() {
@@ -53,6 +59,11 @@ var _ = Describe("Comparers", func() {
 			comparable, same := String("hello").Equal(String("hello "))
 			Expect(comparable).To(BeTrue())
 			Expect(same).To(BeFalse())
+		})
+
+		It("should not be comparable to another Equaler of different type", func() {
+			comparable, _ := String("12").Equal(Int64(12))
+			Expect(comparable).To(BeFalse())
 		})
 
 		It("should be less than another String of greater value", func() {
