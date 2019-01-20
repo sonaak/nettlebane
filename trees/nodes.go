@@ -59,6 +59,41 @@ func (i Int64) Compare(j Comparer) (result comparison) {
 }
 
 
+type String string
+
+
+func (s String) Equal(t Equaler) (comparable bool, equal bool) {
+	if val, ok := t.(String); !ok {
+		return false, false
+	} else {
+		result := s.compare(val)
+		return result != INCOMPARABLE, result == EQUAL
+	}
+}
+
+func (s String) compare(t String) (result comparison) {
+	var sVal, tVal = string(s), string(t)
+
+	if sVal < tVal {
+		return LESSER
+	} else if tVal < sVal {
+		return GREATER
+	}
+
+	return EQUAL
+}
+
+
+func (s String) Compare(t Comparer) (result comparison) {
+	val, ok := t.(String)
+	if !ok {
+		return INCOMPARABLE
+	}
+
+	return s.compare(val)
+}
+
+
 type Node struct {
 	value Equaler
 	childNodes []*Node
