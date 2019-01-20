@@ -1,0 +1,77 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+
+defaults: &defaults
+  working_directory: /go/src/github.com/sonaak/nettlebane
+  docker:
+  - image: circleci/golang:1.9
+
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+
+    # specify any bash command here prefixed with `run: `
+    - run: curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+    - run:
+        name: Download cc-test-reporter
+        command: |
+          mkdir -p tmp/
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+          chmod +x ./tmp/cc-test-reporter
+    - persist_to_workspace:
+        root: tmp
+        paths:
+        - cc-test-reporter
+
+
+  unit-tests:
+    <<: *defaults
+    steps:
+    - checkout
+    - attach_workspace:
+        at: /go/src/github.com/sonaak/nettlebane/tmp
+    - run:
+        name: install go dependencies
+        command: go get -v -t -d ./...
+    - run:
+        name: unit test code
+        command: |
+          # run unittest
+          scripts/unittest.sh run
+          # generate the json files
+          REPORTER=./tmp/cc-test-reporter scripts/unittest.sh coverage
+    - persist_to_workspace:
+        root: tmp
+        paths:
+        - cc.*.json
+
+  upload-coverage:
+    <<: *defaults
+    environment:
+    - CC_TEST_REPORTER_ID: 26e909403aeeca814e03093e2c5d6a5a2e7273ea5e5803b214a36c9655e97a43
+    steps:
+    - checkout
+    - attach_workspace:
+        at: /go/src/github.com/sonaak/nettlebane/tmp
+    - run:
+        name: upload coverage results to Code Climate
+        command: |
+          # sum coverage
+          REPORTER=./tmp/cc-test-reporter scripts/unittest.sh sum
+          ./tmp/cc-test-reporter upload-coverage -i ./tmp/cc.total.json
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+    - build
+    - unit-tests:
+        requires:
+        - build
+    - upload-coverage:
+        requires:
+        - unit-tests
