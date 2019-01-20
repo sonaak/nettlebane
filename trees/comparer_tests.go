@@ -64,5 +64,10 @@ var _ = Describe("Comparers", func() {
 			result := String("hello").Compare(String("Hello"))
 			Expect(result).To(Equal(GREATER))
 		})
+
+		It("should not be comparable to another Comparer of different type", func() {
+			result := String("13").Compare(Int64(13))
+			Expect(result).To(Equal(INCOMPARABLE))
+		})
 	})
 })
