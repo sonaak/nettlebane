@@ -1,6 +1,9 @@
 package trees
 
-import "sync"
+import (
+	. "github.com/sonaak/nettlebane/interfaces"
+	"sync"
+)
 
 // A tree that satisfies the "binary search" property, and therefore
 // has a unique insert/remove action
