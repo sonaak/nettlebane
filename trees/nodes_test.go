@@ -55,6 +55,22 @@ var _ = Describe("Node", func() {
 
 			})
 		})
+
+		Context("PrependChild", func(){
+			It("should add a child to the front", func() {
+				nodes := []*Node{
+					NewNode(String("first"), []*Node{}),
+					NewNode(String("second"), []*Node{}),
+				}
+				value := String("hello")
+				node := NewNode(value, nodes)
+				node.PrependChild(NewNode(String("newFirst"), []*Node{}))
+
+				Expect(node.Children()).To(HaveLen(3))
+				Expect(node.Children()[0]).To(Equal(NewNode(String("newFirst"), []*Node{})))
+
+			})
+		})
 	})
 
 	Describe("BinaryNode", func() {
