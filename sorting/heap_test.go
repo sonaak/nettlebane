@@ -82,5 +82,11 @@ var _ = Describe("MaxHeaps", func() {
 		 		Int64(1),
 			})))
 		})
+
+		It("should do fine with index out of bounds", func() {
+			intList := []Comparer{}
+			heap := MaxHeap(intList)
+			Expect(func() {heap.order(2)}).ToNot(Panic())
+		})
 	})
 })
