@@ -31,19 +31,20 @@ incumbent fail to answer these questions, should we sack him? What portion of th
 life-cycle of product development consists of (without access to references) rolling
 one's own Kruskal's algorithm?
 
-The prevailing rationale for gauging software engineering skills --- i.e. the ability
-for an individual to create correct, maintainable and extensible application and
-iterate successfully upon it to deliver services to one's clients --- are as follows:
+The prevailing rationale for using algorithms in gauging software engineering skills 
+--- i.e. the ability for an individual to create correct, maintainable and extensible 
+application and iterate successfully upon it to deliver services to one's clients --- 
+are as follows:
 
 
 - *we simply want the best; those who don't know are worse than those who do. Since
-  there are those who do, those who don't are filtered out*
+  there are those who do, those who don't should be filtered out*
 
 - *it is not so much knowing HOW TO IMPLEMENT, but HOW TO REASON WITH algorithms that
   determine one's ability to handle software tasks*
   
 - *knowledge of data structure and algorithms correlate strongly to excellence in 
-  the crafts*
+  the craft*
   
 - *the bar is low*
 

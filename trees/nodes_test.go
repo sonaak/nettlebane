@@ -78,5 +78,29 @@ var _ = Describe("Node", func() {
 				Expect(node.Right()).Should(Equal(&rightNode))
 			})
 		})
+
+		Context("SetLeft", func() {
+			It("should return the correct node after set", func() {
+				leftNode, rightNode := NewBinaryNode(String("left"), nil, nil),
+					NewBinaryNode(String("right"), nil, nil)
+				node := NewBinaryNode(String("root"), nil, rightNode)
+				node.SetLeft(leftNode)
+
+				Expect(node.Left()).Should(Equal(leftNode))
+				Expect(node.Right()).Should(Equal(rightNode))
+			})
+		})
+
+		Context("SetRight", func() {
+			It("should return the correct node after set", func() {
+				leftNode, rightNode := NewBinaryNode(String("left"), nil, nil),
+					NewBinaryNode(String("right"), nil, nil)
+				node := NewBinaryNode(String("root"), leftNode, nil)
+				node.SetRight(rightNode)
+
+				Expect(node.Left()).Should(Equal(leftNode))
+				Expect(node.Right()).Should(Equal(rightNode))
+			})
+		})
 	})
 })

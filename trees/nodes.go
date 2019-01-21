@@ -117,6 +117,17 @@ func (node *Node) Children() []*Node {
 	return node.childNodes
 }
 
+
+func (node *Node) AppendChild(childNode *Node) {
+	node.childNodes = append(node.childNodes, childNode)
+}
+
+
+func (node *Node) PrependChild(childNode *Node) {
+	node.childNodes = append([]*Node{childNode}, node.childNodes...)
+}
+
+
 type BinaryNode Node
 
 
@@ -147,4 +158,14 @@ func (node *BinaryNode) Left() *BinaryNode {
 func (node *BinaryNode) Right() *BinaryNode {
 	leftNode := node.childNodes[1]
 	return (*BinaryNode)(leftNode)
+}
+
+// Assume that left is nil, sets left to n
+func (node *BinaryNode) SetLeft(n *BinaryNode) {
+	node.childNodes[0] = (*Node)(n)
+}
+
+// Assume that right is nil, sets right to n
+func (node *BinaryNode) SetRight(n *BinaryNode) {
+	node.childNodes[1] = (*Node)(n)
 }
