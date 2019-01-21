@@ -15,6 +15,10 @@ func right(index uint64) uint64 {
 }
 
 func parent(index uint64) uint64 {
+	if index == 0 {
+		return 0
+	}
+
 	return (index - 1) >> 1
 }
 

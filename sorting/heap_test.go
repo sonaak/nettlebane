@@ -13,6 +13,15 @@ func TestHeaps(t *testing.T) {
 }
 
 var _ = Describe("MaxHeaps", func() {
+	Context("parent", func() {
+		It("should define the correct number", func() {
+			Expect(parent(1)).To(Equal(uint64(0)))
+			Expect(parent(0)).To(Equal(uint64(0)))
+			Expect(parent(8)).To(Equal(uint64(3)))
+		})
+
+	})
+
 	Context("NewMaxHeaps", func() {
 		It("should instantiate an empty list", func() {
 			comparers := []Comparer{}
