@@ -3,4 +3,5 @@
 
 # Tests and their coverages
 cover.out
+cover.*.out
 coverage.html
