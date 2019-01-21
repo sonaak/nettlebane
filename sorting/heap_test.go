@@ -88,5 +88,11 @@ var _ = Describe("MaxHeaps", func() {
 			heap := MaxHeap(intList)
 			Expect(func() {heap.order(2)}).ToNot(Panic())
 		})
+
+		It("should do fine with nil heaps", func() {
+			var heap *MaxHeap = nil
+
+			Expect(func() {heap.order(1)}).NotTo(Panic())
+		})
 	})
 })
