@@ -19,8 +19,22 @@ var _ = Describe("MaxHeaps", func() {
 			Expect(parent(0)).To(Equal(uint64(0)))
 			Expect(parent(8)).To(Equal(uint64(3)))
 		})
-
 	})
+
+	Context("left/right", func() {
+		It("should define the correct number for left", func() {
+			Expect(left(1)).To(Equal(uint64(3)))
+			Expect(left(0)).To(Equal(uint64(1)))
+			Expect(left(3)).To(Equal(uint64(7)))
+		})
+
+		It("should define the correct number for right", func() {
+			Expect(right(1)).To(Equal(uint64(4)))
+			Expect(right(0)).To(Equal(uint64(2)))
+			Expect(right(3)).To(Equal(uint64(8)))
+		})
+	})
+
 
 	Context("NewMaxHeaps", func() {
 		It("should instantiate an empty list", func() {
@@ -28,6 +42,30 @@ var _ = Describe("MaxHeaps", func() {
 			Expect(func() {
 				NewMaxHeap(comparers)
 			}).ToNot(Panic())
+		})
+	})
+
+	Context("size", func() {
+		It("should return 0 for empty heaps", func() {
+			heap := MaxHeap([]Comparer {})
+			Expect(heap.size()).To(Equal(uint64(0)))
+		})
+
+		It("should return the correct sizes", func() {
+
+
+			heap := MaxHeap([]Comparer {
+				Int64(9),
+				Int64(6),
+				Int64(1),
+			})
+			Expect(heap.size()).To(Equal(uint64(3)))
+		})
+
+		It("should not panic for nil heaps", func() {
+			var heap *MaxHeap = nil
+			Expect(func() {heap.size()}).NotTo(Panic())
+			Expect(heap.size()).To(Equal(uint64(0)))
 		})
 	})
 
