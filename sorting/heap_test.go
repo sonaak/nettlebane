@@ -144,12 +144,42 @@ var _ = Describe("MaxHeaps", func() {
 	})
 
 	Context("orderIteratively", func() {
-			It("should order correctly", func() {
-		 	intList := []Comparer {
+		It("should order correctly", func() {
+			intList := []Comparer {
+				Int64(16),
+				Int64(4),
+				Int64(10),
+				Int64(14),
+				Int64(7),
+				Int64(9),
+				Int64(3),
+				Int64(2),
+				Int64(8),
+				Int64(1),
+			}
+			heap := MaxHeap(intList)
+			heap.orderIteratively(1)
+
+			Expect(heap).To(Equal(MaxHeap([]Comparer {
+				Int64(16),
+				Int64(14),
+				Int64(10),
+				Int64(8),
+				Int64(7),
+				Int64(9),
+				Int64(3),
+				Int64(2),
+				Int64(4),
+				Int64(1),
+			})))
+		})
+
+		It("should stop when already ordered", func() {
+			intList := []Comparer {
 		 		Int64(16),
-		 		Int64(4),
-		 		Int64(10),
 		 		Int64(14),
+		 		Int64(10),
+		 		Int64(4),
 		 		Int64(7),
 		 		Int64(9),
 		 		Int64(3),
@@ -164,15 +194,26 @@ var _ = Describe("MaxHeaps", func() {
 				Int64(16),
 		 		Int64(14),
 		 		Int64(10),
-		 		Int64(8),
+		 		Int64(4),
 		 		Int64(7),
 		 		Int64(9),
 		 		Int64(3),
 		 		Int64(2),
-		 		Int64(4),
+		 		Int64(8),
 		 		Int64(1),
 			})))
 		})
 
+		It("should do fine with index out of bounds", func() {
+			intList := []Comparer{}
+			heap := MaxHeap(intList)
+			Expect(func() {heap.orderIteratively(2)}).ToNot(Panic())
+		})
+
+		It("should do fine with nil heaps", func() {
+			var heap *MaxHeap = nil
+
+			Expect(func() {heap.orderIteratively(1)}).NotTo(Panic())
+		})
 	})
 })
