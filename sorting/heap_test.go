@@ -142,4 +142,37 @@ var _ = Describe("MaxHeaps", func() {
 			Expect(func() {heap.order(1)}).NotTo(Panic())
 		})
 	})
+
+	Context("orderIteratively", func() {
+			It("should order correctly", func() {
+		 	intList := []Comparer {
+		 		Int64(16),
+		 		Int64(4),
+		 		Int64(10),
+		 		Int64(14),
+		 		Int64(7),
+		 		Int64(9),
+		 		Int64(3),
+		 		Int64(2),
+		 		Int64(8),
+		 		Int64(1),
+			}
+			heap := MaxHeap(intList)
+			heap.orderIteratively(1)
+
+			Expect(heap).To(Equal(MaxHeap([]Comparer {
+				Int64(16),
+		 		Int64(14),
+		 		Int64(10),
+		 		Int64(8),
+		 		Int64(7),
+		 		Int64(9),
+		 		Int64(3),
+		 		Int64(2),
+		 		Int64(4),
+		 		Int64(1),
+			})))
+		})
+
+	})
 })
