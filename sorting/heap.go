@@ -39,18 +39,12 @@ func (heap *MaxHeap) size() uint64 {
 	return uint64(len(([]Comparer)(*heap)))
 }
 
-func (heap *MaxHeap) order(index uint64) {
-	if heap == nil {
-		return
-	}
 
+func (heap *MaxHeap) compareAndSwap(current uint64) (largest uint64) {
+	leftIndex, rightIndex := left(current), right(current)
+	largest = current
+	maxIndex := heap.size() - 1
 	data := ([]Comparer)(*heap)
-	leftIndex, rightIndex := int64(left(index)), int64(right(index))
-	largest := int64(index)
-	maxIndex := int64(heap.size()) - 1
-	if largest > maxIndex {
-		return
-	}
 
 	if leftIndex <= maxIndex && data[largest].Compare(data[leftIndex]) == LESSER {
 		largest = leftIndex
@@ -60,8 +54,35 @@ func (heap *MaxHeap) order(index uint64) {
 		largest = rightIndex
 	}
 
-	if largest != int64(index) {
-		data[largest], data[index] = data[index], data[largest]
-		heap.order(uint64(largest))
+	if largest != current {
+		data[largest], data[current] = data[current], data[largest]
 	}
+	return
+}
+
+
+func (heap *MaxHeap) order(index uint64) {
+	if heap.size() == uint64(0) {
+		return
+	}
+
+	largest := heap.compareAndSwap(index)
+	if largest != index {
+		heap.order(largest)
+	}
+}
+
+func (heap *MaxHeap) orderIteratively(index uint64) {
+	if heap.size() == uint64(0) {
+		return
+	}
+
+	for index < heap.size() - 1 {
+		largest := heap.compareAndSwap(index)
+		if largest == index {
+			return
+		}
+		index = largest
+	}
+
 }
