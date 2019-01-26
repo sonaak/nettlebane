@@ -55,4 +55,38 @@ var _ = Describe("PriorityQueues", func() {
 			Expect(max).To(Equal(Int64(18)))
 		})
 	})
+
+	Context("Peek", func() {
+		It("should report empty when the queue is empty", func() {
+			empty := []Comparer{}
+			heap := NewMaxHeap(empty)
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			_, isEmpty := queue.Peek()
+			Expect(isEmpty).To(BeTrue())
+		})
+
+		It("should return objects of type Comparer", func() {
+			heap := NewMaxHeap([]Comparer{
+				Int64(12),
+			})
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			max, isEmpty := queue.Peek()
+
+			Expect(isEmpty).To(BeFalse())
+			Expect(max).To(Equal(Int64(12)))
+		})
+
+		It("should provide the maximum of the queue", func() {
+
+		})
+
+		It("should not remove any items from the queue", func() {
+
+		})
+
+	})
 })
