@@ -249,6 +249,7 @@ var _ = Describe("MaxHeaps", func() {
 				Int64(0),
 				Int64(4),
 				Int64(18),
+				Int64(12),
 				Int64(5),
 			}
 
@@ -259,6 +260,7 @@ var _ = Describe("MaxHeaps", func() {
 				Int64(1),
 				Int64(4),
 				Int64(5),
+				Int64(12),
 				Int64(12),
 				Int64(18),
 			}))
