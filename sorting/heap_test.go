@@ -233,4 +233,13 @@ var _ = Describe("MaxHeaps", func() {
 			Expect(func() {heap.orderIteratively(1)}).NotTo(Panic())
 		})
 	})
+
+	Context("HeapSort", func() {
+		It("should sort the empty list correctly", func() {
+			comparer := []Comparer{}
+			Expect(func() {HeapSort(comparer)}).ToNot(Panic())
+			Expect(comparer).To(Equal(comparer))
+		})
+	})
+
 })
