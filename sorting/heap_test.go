@@ -236,9 +236,55 @@ var _ = Describe("MaxHeaps", func() {
 
 	Context("HeapSort", func() {
 		It("should sort the empty list correctly", func() {
-			comparer := []Comparer{}
-			Expect(func() {HeapSort(comparer)}).ToNot(Panic())
-			Expect(comparer).To(Equal(comparer))
+			comparers := []Comparer{}
+			Expect(func() {HeapSort(comparers)}).ToNot(Panic())
+			Expect(comparers).To(Equal(comparers))
+		})
+
+		It("should sort a list of integers correctly", func() {
+			comparers := []Comparer{
+				Int64(12),
+				Int64(1),
+				Int64(-2),
+				Int64(0),
+				Int64(4),
+				Int64(18),
+				Int64(5),
+			}
+
+			HeapSort(comparers)
+			Expect(comparers).To(Equal([]Comparer {
+				Int64(-2),
+				Int64(0),
+				Int64(1),
+				Int64(4),
+				Int64(5),
+				Int64(12),
+				Int64(18),
+			}))
+		})
+
+		It("should preserve a sorted list of integers", func() {
+			comparers := []Comparer {
+				Int64(-1),
+				Int64(0),
+				Int64(1),
+				Int64(2),
+				Int64(3),
+				Int64(4),
+				Int64(5),
+			}
+
+			HeapSort(comparers)
+			Expect(comparers).To(Equal([]Comparer {
+				Int64(-1),
+				Int64(0),
+				Int64(1),
+				Int64(2),
+				Int64(3),
+				Int64(4),
+				Int64(5),
+			}))
 		})
 	})
 
