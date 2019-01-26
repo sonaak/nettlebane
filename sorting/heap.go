@@ -94,7 +94,7 @@ func (heap *MaxHeap) orderIteratively(index uint64) {
 // Sorting with MaxHeap in place.
 func HeapSort(comparers []Comparer) {
 	_ = NewMaxHeap(comparers)
-	for i := len(comparers) - 1; i > 0; i++ {
+	for i := len(comparers) - 1; i > 0; i-- {
 		comparers[0], comparers[i] = comparers[i], comparers[0]
 		unsorted := comparers[:i]
 		(*MaxHeap)(&unsorted).order(0)
