@@ -74,18 +74,46 @@ var _ = Describe("PriorityQueues", func() {
 			Expect(heap).ToNot(BeNil())
 
 			queue := PriorityQueue{*heap}
-			max, isEmpty := queue.Peek()
+			next, isEmpty := queue.Peek()
 
 			Expect(isEmpty).To(BeFalse())
-			Expect(max).To(Equal(Int64(12)))
+			Expect(next).To(Equal(Int64(12)))
 		})
 
 		It("should provide the maximum of the queue", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(10),
+				Int64(18),
+				Int64(18),
+			})
+			Expect(heap).ToNot(BeNil())
 
+			queue := PriorityQueue{*heap}
+			next, _ := queue.Peek()
+			max, _ := queue.Maxium()
+			Expect(next).To(Equal(max))
 		})
 
 		It("should not remove any items from the queue", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(10),
+				Int64(18),
+				Int64(18),
+			})
+			Expect(heap).ToNot(BeNil())
 
+			queue := PriorityQueue{*heap}
+			next, _ := queue.Peek()
+			Expect(next).To(Equal(Int64(18)))
+
+			Expect(queue.MaxHeap).To(ConsistOf(MaxHeap([]Comparer{
+				Int64(18),
+				Int64(18),
+				Int64(12),
+				Int64(10),
+			})))
 		})
 
 	})
