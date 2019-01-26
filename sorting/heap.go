@@ -27,7 +27,11 @@ func parent(index uint64) uint64 {
 type MaxHeap []Comparer
 
 func NewMaxHeap(comparers []Comparer) *MaxHeap {
-	return (*MaxHeap)(&comparers)
+	heap := (*MaxHeap)(&comparers)
+	for i := len(comparers) << 1 - 1; i >= 0; i-- {
+		heap.order(uint64(i))
+	}
+	return heap
 }
 
 func (heap *MaxHeap) size() uint64 {
@@ -84,5 +88,10 @@ func (heap *MaxHeap) orderIteratively(index uint64) {
 		}
 		index = largest
 	}
+
+}
+
+// Sorting with MaxHeap in place.
+func HeapSort([]Comparer) {
 
 }

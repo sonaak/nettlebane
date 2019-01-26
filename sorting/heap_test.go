@@ -43,6 +43,23 @@ var _ = Describe("MaxHeaps", func() {
 				NewMaxHeap(comparers)
 			}).ToNot(Panic())
 		})
+
+		It("should (max) heapify a list of comparers", func() {
+			comparers := []Comparer {
+				Int64(4),
+				Int64(8),
+				Int64(9),
+				Int64(12),
+				Int64(2),
+			}
+			Expect(NewMaxHeap(comparers)).To(Equal((*MaxHeap)(&[]Comparer{
+				Int64(12),
+				Int64(8),
+				Int64(9),
+				Int64(4),
+				Int64(2),
+			})))
+		})
 	})
 
 	Context("size", func() {
