@@ -49,3 +49,27 @@ func (queue *PriorityQueue) Pop() (interface{}, bool) {
 
 	return next, false
 }
+
+func (queue *PriorityQueue) PushComparer(comparer Comparer) (err error){
+	// add the item to the back and bubble up
+	comparers := append([]Comparer(queue.MaxHeap), comparer)
+	queue.MaxHeap = MaxHeap(comparers)
+	comparerIndex := uint64(len(comparers)) - 1
+
+	for {
+		parentIndex := parent(comparerIndex)
+		parentObj := comparers[parentIndex]
+
+		comparison := comparer.Compare(parentObj)
+		if comparison == INCOMPARABLE {
+			return errors.New("incompatible comparable object added to priority queue")
+		} else if comparison != GREATER {
+			return nil
+		}
+
+		comparers[comparerIndex], comparers[parentIndex] =
+			comparers[parentIndex], comparers[comparerIndex]
+		comparerIndex = parentIndex
+	}
+}
+
