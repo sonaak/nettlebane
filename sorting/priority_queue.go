@@ -51,7 +51,6 @@ func (queue *PriorityQueue) Pop() (interface{}, bool) {
 }
 
 func (queue *PriorityQueue) PushComparer(comparer Comparer) (err error){
-	// add the item to the back and bubble up
 	comparers := append([]Comparer(queue.MaxHeap), comparer)
 	queue.MaxHeap = MaxHeap(comparers)
 	comparerIndex := uint64(len(comparers)) - 1
@@ -73,3 +72,12 @@ func (queue *PriorityQueue) PushComparer(comparer Comparer) (err error){
 	}
 }
 
+
+func (queue *PriorityQueue) Push(obj interface{}) (error) {
+	comparer, ok := obj.(Comparer)
+	if !ok {
+		return errors.New("object does not implement Comparer interface")
+	}
+
+	return queue.PushComparer(comparer)
+}

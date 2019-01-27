@@ -380,7 +380,7 @@ var _ = Describe("PriorityQueues", func() {
 			Expect(max).To(Equal(Int64(22)))
 		})
 
-		It("should raise error when adding incomtablish objects", func() {
+		It("should raise error when adding incompatible objects", func() {
 			heap := NewMaxHeap([]Comparer {
 				Int64(12),
 				Int64(-3),
@@ -389,6 +389,114 @@ var _ = Describe("PriorityQueues", func() {
 			})
 			queue := PriorityQueue{*heap}
 			err := queue.PushComparer(String("foobar"))
+			Expect(err).ToNot(BeNil())
+		})
+	})
+
+	Context("Push", func() {
+		It("should be able to add to an empty queue", func() {
+			empty := []Comparer{}
+			heap := NewMaxHeap(empty)
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			err := queue.Push(Int64(3))
+			Expect(err).To(BeNil())
+			Expect(queue.MaxHeap).To(Equal(MaxHeap([]Comparer{
+				Int64(3),
+			})))
+		})
+
+		It("should correctly add one object", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(2),
+				Int64(10),
+				Int64(8),
+				Int64(18),
+			})
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			err := queue.Push(Int64(4))
+			Expect(err).To(BeNil())
+
+			Expect(queue.MaxHeap).To(ConsistOf(
+				Int64(2),
+				Int64(10),
+				Int64(8),
+				Int64(18),
+				Int64(4),
+			))
+		})
+
+		It("should maintain the heap property when adding object", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(-3),
+				Int64(10),
+				Int64(3),
+				Int64(18),
+				Int64(5),
+				Int64(18),
+				Int64(-1),
+				Int64(12),
+				Int64(8),
+				Int64(0),
+				Int64(1),
+			})
+
+			queue := PriorityQueue{*heap}
+			err := queue.PushComparer(Int64(9))
+			Expect(err).To(BeNil())
+			Expect(IsMaxHeap([]Comparer(queue.MaxHeap))).To(BeTrue())
+		})
+
+		It("should bubble up maximum objects when adding", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(-3),
+				Int64(10),
+				Int64(3),
+				Int64(18),
+				Int64(5),
+				Int64(18),
+				Int64(-1),
+				Int64(12),
+				Int64(8),
+				Int64(0),
+				Int64(1),
+			})
+
+			queue := PriorityQueue{*heap}
+			err := queue.Push(Int64(22))
+			Expect(err).To(BeNil())
+
+			max, peekErr := queue.Maximum()
+			Expect(peekErr).To(BeNil())
+			Expect(max).To(Equal(Int64(22)))
+		})
+
+		It("should raise error when adding incompatible objects", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(-3),
+				Int64(10),
+				Int64(3),
+			})
+			queue := PriorityQueue{*heap}
+			err := queue.Push(String("foobar"))
+			Expect(err).ToNot(BeNil())
+		})
+
+		It("should raise error when adding non-Comparer objects", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(-3),
+				Int64(10),
+				Int64(3),
+			})
+			queue := PriorityQueue{*heap}
+			err := queue.Push(4)
 			Expect(err).ToNot(BeNil())
 		})
 	})
