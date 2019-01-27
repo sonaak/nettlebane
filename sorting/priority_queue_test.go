@@ -312,14 +312,54 @@ var _ = Describe("PriorityQueues", func() {
 		})
 
 		It("should correctly add one object", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(2),
+				Int64(10),
+				Int64(8),
+				Int64(18),
+			})
+			Expect(heap).ToNot(BeNil())
 
+			queue := PriorityQueue{*heap}
+			err := queue.PushComparer(Int64(4))
+			Expect(err).To(BeNil())
+
+			Expect(queue.MaxHeap).To(ConsistOf(
+				Int64(2),
+				Int64(10),
+				Int64(8),
+				Int64(18),
+				Int64(4),
+			))
 		})
 
 		It("should maintain the heap property when adding objects", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(-3),
+				Int64(10),
+				Int64(3),
+				Int64(18),
+				Int64(5),
+				Int64(18),
+				Int64(-1),
+				Int64(12),
+				Int64(8),
+				Int64(0),
+				Int64(1),
+			})
 
+			queue := PriorityQueue{*heap}
+			err := queue.PushComparer(Int64(9))
+			Expect(err).To(BeNil())
+			Expect(IsMaxHeap([]Comparer(queue.MaxHeap))).To(BeTrue())
 		})
 
 		It("should bubble up maximum objects when adding", func() {
+
+		})
+
+		It("should raise error when adding incomtablish objects", func() {
 
 		})
 	})
