@@ -381,7 +381,15 @@ var _ = Describe("PriorityQueues", func() {
 		})
 
 		It("should raise error when adding incomtablish objects", func() {
-
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(-3),
+				Int64(10),
+				Int64(3),
+			})
+			queue := PriorityQueue{*heap}
+			err := queue.PushComparer(String("foobar"))
+			Expect(err).ToNot(BeNil())
 		})
 	})
 })
