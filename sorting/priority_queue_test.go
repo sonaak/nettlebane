@@ -296,4 +296,31 @@ var _ = Describe("PriorityQueues", func() {
 			Expect(IsMaxHeap([]Comparer(queue.MaxHeap))).To(BeTrue())
 		})
 	})
+
+	Context("PushComparer", func() {
+		It("should be able to add one object", func() {
+			empty := []Comparer{}
+			heap := NewMaxHeap(empty)
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			err := queue.PushComparer(Int64(3))
+			Expect(err).To(BeNil())
+			Expect(queue.MaxHeap).To(Equal(MaxHeap([]Comparer{
+				Int64(3),
+			})))
+		})
+
+		It("should correctly add one object", func() {
+
+		})
+
+		It("should maintain the heap property when adding objects", func() {
+
+		})
+
+		It("should bubble up maximum objects when adding", func() {
+
+		})
+	})
 })
