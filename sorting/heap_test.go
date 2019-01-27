@@ -41,6 +41,13 @@ var _ = Describe("MaxHeaps", func() {
 			Expect(IsMaxHeap(comparers)).To(BeTrue())
 		})
 
+		It("should correctly identify the singleton list as being a max heap", func() {
+			comparers := []Comparer {
+				Int64(1),
+			}
+			Expect(IsMaxHeap(comparers)).To(BeTrue())
+		})
+
 		It("should correctly identify when a list satisfies the max heap property", func() {
 			comparers := []Comparer {
 				Int64(12),
