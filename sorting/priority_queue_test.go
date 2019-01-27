@@ -145,7 +145,7 @@ var _ = Describe("PriorityQueues", func() {
 			Expect(next).To(Equal(max))
 		})
 
-		It("should remove an extra item from the front of the queue", func() {
+		It("should remove an item from the front of the queue", func() {
 			heap := NewMaxHeap([]Comparer {
 				Int64(12),
 				Int64(-3),
@@ -198,6 +198,54 @@ var _ = Describe("PriorityQueues", func() {
 			queue := PriorityQueue{*heap}
 			_, _ = queue.PopMaximum()
 			Expect(IsMaxHeap([]Comparer(queue.MaxHeap))).To(BeTrue())
+
+		})
+	})
+
+	Context("Pop", func() {
+		It("should report empty when the queue is empty", func() {
+			empty := []Comparer{}
+			heap := NewMaxHeap(empty)
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			_, isEmpty := queue.Pop()
+			Expect(isEmpty).To(BeTrue())
+		})
+
+		It("should return objects of type Comparer", func() {
+			heap := NewMaxHeap([]Comparer{
+				Int64(12),
+			})
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			next, isEmpty := queue.Pop()
+
+			Expect(isEmpty).To(BeFalse())
+			Expect(next).To(Equal(Int64(12)))
+		})
+
+		It("should provide the maximum of the queue", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(10),
+				Int64(18),
+				Int64(18),
+			})
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			next, _ := queue.Peek()
+			max, _ := queue.Pop()
+			Expect(next).To(Equal(max))
+		})
+
+		It("should remove an item from the front of the queue", func() {
+
+		})
+
+		It("should preserve the heap property for queue", func() {
 
 		})
 	})
