@@ -27,3 +27,16 @@ func (queue *PriorityQueue) Peek() (interface{}, bool) {
 
 	return next, false
 }
+
+func (queue *PriorityQueue) PopMaximum() (max Comparer, err error) {
+	max, err = queue.Maxium()
+	if err != nil {
+		return
+	}
+
+	remainder := []Comparer(queue.MaxHeap)[1:]
+	queue.MaxHeap = MaxHeap(remainder)
+	queue.MaxHeap.order(0)
+
+	return
+}
