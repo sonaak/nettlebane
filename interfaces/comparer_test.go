@@ -9,7 +9,7 @@ import (
 
 func TestComparables(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Node Suite")
+	RunSpecs(t, "Comparables")
 }
 
 var _ = Describe("Comparers", func() {
