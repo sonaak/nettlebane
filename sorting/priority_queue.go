@@ -40,3 +40,12 @@ func (queue *PriorityQueue) PopMaximum() (max Comparer, err error) {
 
 	return
 }
+
+func (queue *PriorityQueue) Pop() (interface{}, bool) {
+	next, err := queue.PopMaximum()
+	if err != nil {
+		return nil, true
+	}
+
+	return next, false
+}
