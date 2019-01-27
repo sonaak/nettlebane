@@ -180,6 +180,24 @@ var _ = Describe("PriorityQueues", func() {
 		})
 
 		It("should preserve the heap property for queue", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(-3),
+				Int64(10),
+				Int64(3),
+				Int64(18),
+				Int64(5),
+				Int64(18),
+				Int64(-1),
+				Int64(12),
+				Int64(8),
+				Int64(0),
+				Int64(1),
+			})
+
+			queue := PriorityQueue{*heap}
+			_, _ = queue.PopMaximum()
+			Expect(IsMaxHeap([]Comparer(queue.MaxHeap))).To(BeTrue())
 
 		})
 	})

@@ -69,6 +69,17 @@ var _ = Describe("MaxHeaps", func() {
 				Int64(2),
 			}
 			Expect(IsMaxHeap(comparers)).To(BeFalse())
+
+			comparers = []Comparer {
+				Int64(4),
+				Int64(2),
+				Int64(17),
+				Int64(-1),
+				Int64(0),
+				Int64(8),
+				Int64(2),
+			}
+			Expect(IsMaxHeap(comparers)).To(BeFalse())
 		})
 	})
 
