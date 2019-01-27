@@ -22,13 +22,44 @@ func parent(index uint64) uint64 {
 	return (index - 1) >> 1
 }
 
+
+func isMaxHeapAt(comparers []Comparer, index uint64) bool {
+	length := uint64(len(comparers))
+	leftIndex, rightIndex := left(index), right(index)
+
+	if leftIndex < length && comparers[index].Compare(comparers[leftIndex]) == LESSER {
+		return false
+	}
+
+	if rightIndex < length && comparers[index].Compare(comparers[rightIndex]) == LESSER {
+		return false
+	}
+
+	return true
+}
+
+
+func IsMaxHeap(comparers []Comparer) bool {
+	if len(comparers) <= 1 {
+		return true
+	}
+
+	for i := range comparers[:len(comparers) >> 1 - 1] {
+		if !isMaxHeapAt(comparers, uint64(i)) {
+			return false
+		}
+	}
+
+	return true
+}
+
 // A max binary heap
 // See Chapter 6 in Cormen et al. 2e (p. 127)
 type MaxHeap []Comparer
 
 func NewMaxHeap(comparers []Comparer) *MaxHeap {
 	heap := (*MaxHeap)(&comparers)
-	for i := len(comparers) << 1 - 1; i >= 0; i-- {
+	for i := len(comparers) >> 1 - 1; i >= 0; i-- {
 		heap.order(uint64(i))
 	}
 	return heap

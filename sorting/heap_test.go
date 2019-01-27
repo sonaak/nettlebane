@@ -9,7 +9,7 @@ import (
 
 func TestHeaps(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Node Suite")
+	RunSpecs(t, "Heap")
 }
 
 var _ = Describe("MaxHeaps", func() {
@@ -35,6 +35,35 @@ var _ = Describe("MaxHeaps", func() {
 		})
 	})
 
+	Context("IsMaxHeap", func() {
+		It("should correctly identify the empty list as being a max heap", func() {
+			comparers := []Comparer {}
+			Expect(IsMaxHeap(comparers)).To(BeTrue())
+		})
+
+		It("should correctly identify when a list satisfies the max heap property", func() {
+			comparers := []Comparer {
+				Int64(12),
+				Int64(8),
+				Int64(9),
+				Int64(2),
+				Int64(2),
+				Int64(5),
+			}
+			Expect(IsMaxHeap(comparers)).To(BeTrue())
+		})
+
+		It("should correctly identify when a list does not satisfy the heap property", func() {
+			comparers := []Comparer {
+				Int64(4),
+				Int64(8),
+				Int64(9),
+				Int64(12),
+				Int64(2),
+			}
+			Expect(IsMaxHeap(comparers)).To(BeFalse())
+		})
+	})
 
 	Context("NewMaxHeaps", func() {
 		It("should instantiate an empty list", func() {
