@@ -10,7 +10,7 @@ import (
 
 func TestPriorityQueue(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Node Suite")
+	RunSpecs(t, "Priority Queue")
 }
 
 
@@ -22,7 +22,7 @@ var _ = Describe("PriorityQueues", func() {
 			Expect(heap).ToNot(BeNil())
 
 			queue := PriorityQueue{*heap}
-			_, err := queue.Maxium()
+			_, err := queue.Maximum()
 			Expect(err).ToNot(BeNil())
 		})
 
@@ -33,7 +33,7 @@ var _ = Describe("PriorityQueues", func() {
 			Expect(heap).ToNot(BeNil())
 
 			queue := PriorityQueue{*heap}
-			max, err := queue.Maxium()
+			max, err := queue.Maximum()
 
 			Expect(err).To(BeNil())
 			Expect(max).To(Equal(Int64(12)))
@@ -49,7 +49,7 @@ var _ = Describe("PriorityQueues", func() {
 			Expect(heap).ToNot(BeNil())
 
 			queue := PriorityQueue{*heap}
-			max, err := queue.Maxium()
+			max, err := queue.Maximum()
 
 			Expect(err).To(BeNil())
 			Expect(max).To(Equal(Int64(18)))
@@ -91,7 +91,7 @@ var _ = Describe("PriorityQueues", func() {
 
 			queue := PriorityQueue{*heap}
 			next, _ := queue.Peek()
-			max, _ := queue.Maxium()
+			max, _ := queue.Maximum()
 			Expect(next).To(Equal(max))
 		})
 
@@ -116,5 +116,71 @@ var _ = Describe("PriorityQueues", func() {
 			})))
 		})
 
+	})
+
+	Context("PopMaximum", func() {
+		It("should report error when the queue is empty", func() {
+			empty := []Comparer{}
+			heap := NewMaxHeap(empty)
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			_, err := queue.PopMaximum()
+			Expect(err).ToNot(BeNil())
+			Expect(queue.MaxHeap).To(BeEmpty())
+		})
+
+		It("should provide the maximum of the queue", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(10),
+				Int64(18),
+				Int64(18),
+			})
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			next, _ := queue.Peek()
+			max, _ := queue.PopMaximum()
+			Expect(next).To(Equal(max))
+		})
+
+		It("should remove an extra item from the front of the queue", func() {
+			heap := NewMaxHeap([]Comparer {
+				Int64(12),
+				Int64(-3),
+				Int64(10),
+				Int64(3),
+				Int64(18),
+				Int64(5),
+				Int64(18),
+				Int64(-1),
+				Int64(12),
+				Int64(8),
+				Int64(0),
+				Int64(1),
+			})
+			Expect(heap).ToNot(BeNil())
+
+			queue := PriorityQueue{*heap}
+			_, _ = queue.PopMaximum()
+			Expect(queue.MaxHeap).To(ConsistOf(
+				Int64(12),
+				Int64(-3),
+				Int64(10),
+				Int64(3),
+				Int64(5),
+				Int64(18),
+				Int64(-1),
+				Int64(12),
+				Int64(8),
+				Int64(0),
+				Int64(1),
+			))
+		})
+
+		It("should preserve the heap property for queue", func() {
+
+		})
 	})
 })

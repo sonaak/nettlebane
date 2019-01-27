@@ -10,7 +10,7 @@ type PriorityQueue struct {
 	MaxHeap
 }
 
-func (queue *PriorityQueue) Maxium() (Comparer, error) {
+func (queue *PriorityQueue) Maximum() (Comparer, error) {
 	comparers := ([]Comparer)(queue.MaxHeap)
 	if len(comparers) <= 0 {
 		return nil, errors.New("priority queue empty")
@@ -20,7 +20,7 @@ func (queue *PriorityQueue) Maxium() (Comparer, error) {
 }
 
 func (queue *PriorityQueue) Peek() (interface{}, bool) {
-	next, err := queue.Maxium()
+	next, err := queue.Maximum()
 	if err != nil {
 		return nil, true
 	}
@@ -29,7 +29,7 @@ func (queue *PriorityQueue) Peek() (interface{}, bool) {
 }
 
 func (queue *PriorityQueue) PopMaximum() (max Comparer, err error) {
-	max, err = queue.Maxium()
+	max, err = queue.Maximum()
 	if err != nil {
 		return
 	}
